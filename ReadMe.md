@@ -6,7 +6,7 @@ The cl_database() class endeavors to make it easy to add database support to PHP
 * Uses prepared statements to prevent SQL injection
 * Logs all queries for reference
 * Automatically applies table prefix to statements
-* Works in PHP 7.0+
+* Works in PHP 5.6-7.0
 
 ## Examples
 
