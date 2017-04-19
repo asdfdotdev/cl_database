@@ -4,7 +4,7 @@ The cl_database() class endeavors to make it easy to add database support to PHP
 
 * Supports MySQL/MariaDB, PostgreSQL, and SQL Server
 * Uses prepared statements to prevent SQL injection
-* Log all queries for reference
+* Logs all queries for reference
 * Automatically applies table prefix to statements
 * Works in PHP 7.0+
 
@@ -203,7 +203,7 @@ ORDER BY hc_locations.Name
 ```
 
 ### Additional Examples
-cl_database class is used in [Helios Calendar](https://github.com/chrislarrycarl/Helios-Calendar), it can be referenced for a wide variety of use case examples.
+cl_database class will shortly be used in [Helios Calendar](https://github.com/chrislarrycarl/Helios-Calendar), which can be referenced for a variety of use case examples.
 
 
 ## Credits
