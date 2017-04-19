@@ -1,12 +1,9 @@
 <?php
 /**
  * Class DatabaseTest
- *
- * Tests include:
  */
 
 namespace ChristopherL;
-
 
 class DatabaseTest extends \PHPUnit\Framework\TestCase
 {
