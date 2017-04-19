@@ -167,7 +167,7 @@ $hcdb->select(
             ]
         ],
         'GROUP' => [
-            'locations' => ['PkID', 'Name', 'Address', 'Address2', 'City', 'State', 'Country', 'Zip', 'Lat', 'Lon', 'URL', 'Phone']
+            'locations' => ['PkID']
         ],
         'HAVING' => [
             'CountLocID[>]' => '0'
