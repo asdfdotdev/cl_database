@@ -327,6 +327,58 @@ class DatabaseTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    public function testOrderBy()
+    {
+        include_once 'cl_database.php';
+
+        $this->db = new \ChristopherL\Database([
+            'server' => $this->database_server,
+            'host' => $this->database_host,
+            'username' => $this->database_user,
+            'password' => $this->database_pass,
+            'database' => $this->database_name,
+            'port' => $this->database_port,
+            'prefix' => $this->database_prefix
+        ]);
+
+        $result = $this->db->select(
+            $this->database_table,
+            [
+                $this->database_table => ['number_column'],
+            ],
+            [
+                'ORDER' => [
+                    $this->database_table => ['number_column[ASC]']
+                ]
+            ]
+        );
+
+        $previous_value = 0;
+        foreach ($result as $record) {
+            $this->assertGreaterThan($previous_value, $record['number_column']);
+            $previous_value = $record['number_column'];
+        }
+
+        $result = $this->db->select(
+            $this->database_table,
+            [
+                $this->database_table => ['number_column'],
+            ],
+            [
+                'ORDER' => [
+                    $this->database_table => ['number_column[DESC]']
+                ]
+            ]
+        );
+
+        $previous_value = 1001;
+        foreach ($result as $record) {
+            $this->assertLessThan($previous_value, $record['number_column']);
+            $previous_value = $record['number_column'];
+        }
+
+    }
+
     public function testDeleteTestTables()
     {
         include_once 'cl_database.php';

@@ -387,7 +387,16 @@ class Database
             foreach ($where['ORDER'] as $table => $columns) {
                 $columns = array_map(
                     function($column) use($table) {
-                        return $this->prepare_table($table, $column);
+                        preg_match('/(.*)(\[.*?\])/i', $column, $matches);
+
+                        if (count($matches) > 0) {
+                            $column = $this->prepare_table($table, str_replace($matches[2], '', $column)) . preg_replace('/\[|\]/i', ' ', $matches[2]);
+                        }
+                        else {
+                            $column = $this->prepare_table($table, $column);
+                        }
+
+                        return $column;
                     },
                     $columns
                 );
@@ -472,7 +481,7 @@ class Database
 
         list($query_where, $query_params) = $this->prepare_where($where);
 
-        if ($query_where != '' && strpos($query_where, 'LIMIT') !== 0) {
+        if ($query_where != '' && preg_match('/^(MATCH|GROUP|HAVING|ORDER|LIMIT)/i', trim($query_where)) == 0) {
             $query_where = ' WHERE ' . $query_where;
         }
 
