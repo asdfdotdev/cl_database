@@ -277,7 +277,7 @@ class Database
 
                                 array_map(function ($key, $entry) use(&$value) {
                                     unset($value[$key]);
-                                    return $value[':'.md5(mt_rand(0, 1000))] = $entry;
+                                    return $value[':'.md5($key)] = $entry;
                                 }, array_keys($value), $value);
 
                                 $query_and_or[] = sprintf(
@@ -499,17 +499,17 @@ class Database
         foreach ($query_params as $parameter => $value) {
             switch (gettype($value)) {
                 case "boolean":
-                    $statement_handle->bindParam($parameter, $value, PDO::PARAM_BOOL);
+                    $statement_handle->bindValue($parameter, $value, PDO::PARAM_BOOL);
                     break;
                 case "integer":
-                    $statement_handle->bindParam($parameter, $value, PDO::PARAM_INT);
+                    $statement_handle->bindValue($parameter, $value, PDO::PARAM_INT);
                     break;
                 case "NULL":
-                    $statement_handle->bindParam($parameter, $value, PDO::PARAM_NULL);
+                    $statement_handle->bindValue($parameter, $value, PDO::PARAM_NULL);
                     break;
                 case "string":
                 default:
-                    $statement_handle->bindParam($parameter, $value, PDO::PARAM_STR);
+                    $statement_handle->bindValue($parameter, $value, PDO::PARAM_STR);
                     break;
             }
         }

@@ -379,6 +379,40 @@ class DatabaseTest extends \PHPUnit\Framework\TestCase
 
     }
 
+    public function testWhereIn()
+    {
+        include_once 'cl_database.php';
+
+        $this->db = new \ChristopherL\Database([
+            'server' => $this->database_server,
+            'host' => $this->database_host,
+            'username' => $this->database_user,
+            'password' => $this->database_pass,
+            'database' => $this->database_name,
+            'port' => $this->database_port,
+            'prefix' => $this->database_prefix
+        ]);
+
+        $result = $this->db->select(
+            $this->database_table,
+            [
+                $this->database_table => ['fish_column'],
+            ],
+            [
+                'SINGLE' => [
+                    $this->database_table => [
+                        'fish_column[in]' => ['one fish', 'two fish', 'blue fish'],
+                    ]
+                ]
+            ]
+        );
+        $this->assertEquals(3, count($result));
+
+        foreach ($result as $record) {
+            $this->assertNotEquals('red fish', $record['fish_column']);
+        }
+    }
+
     public function testDeleteTestTables()
     {
         include_once 'cl_database.php';
